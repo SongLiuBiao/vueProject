@@ -18,6 +18,7 @@ import share from '../comonents/Home/Share/share.vue';
 import video from '../comonents/Home/Video/video.vue';
 import buy from '../comonents/Home/Buy/buy.vue';
 import newsDetail from '../comonents/Home/News/detail.vue';
+import shareDetail from '../comonents/Home/Share/detail.vue';
 
 
 
@@ -40,7 +41,11 @@ let router = new VueRouter({
         { path: '/video', component: video },
 
 
-        { name: 'newsDetail', path: '/news/:id', component: newsDetail, props: true }
+        { name: 'newsDetail', path: '/news/:id', component: newsDetail, props: true },
+        { path: '/share/:id', component: shareDetail, props: true }
+        // { path: '/sharDetail', component: sharDetail }
+
+
     ]
 })
 export default router;

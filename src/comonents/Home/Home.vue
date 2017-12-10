@@ -1,4 +1,5 @@
 <template>
+
 <div class="mui-content">
     <!-- 轮播图 -->
         <myswipe :imgUrl="img_url"></myswipe>

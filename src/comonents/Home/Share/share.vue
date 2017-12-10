@@ -1,40 +1,27 @@
 <template>
    <div class="mui-content">
      <div class="title">
-        <ul>
-        <li><a>全部</a></li>
-        <li><a>家居生活</a></li>
-        <li><a>摄影设计</a></li>
-        <li><a>明星美女</a></li>
-        <li><a>空间设计</a></li>
-        <li><a>户型装饰</a></li>
-        <li><a>摄影设计</a></li>
-        <li><a>明星美女</a></li>
-        <li><a>空间设计</a></li>
-        <li><a>户型装饰</a></li>
-        <li><a>摄影设计</a></li>
-        <li><a>明星美女</a></li>
-        <li><a>空间设计</a></li>
-        <li><a>户型装饰</a></li>
+        <ul :style="ulWidth">
+         <li>
+           <a href="javascript:;" @click.prevent="getimages(-1)">全部</a>
+        </li>
+         <li v-for="item in title" :key="item.id">
+            <a @click.prevent="getimages(item.id)" href="javascript:;">{{ item.title }}</a>
+        </li>
       </ul>
      </div>
      <div class="content">
        <ul>
-          <li>
-            <a href="#">
-              <img src="http://vue.studyit.io/upload/201504/18/thumb_201504181230434303.jpg" alt="">
-            </a>
+          <li v-for="(item,index) in share" :key="index">
+            <!-- <router-link :to="{name:'shareDetail', params:{id:item.id}}"> -->
+              <router-link v-bind="{to:'/share/'+item.id}"></router-link>
+                 <img :src="item.img_url" alt="">
+          
             <div class="footer">
-                  <p>现代简约 明亮的外表卧室卧室背景墙、吊顶黄色</p>
-                  <p>
-                        不要简朴不要素雅洋气卧室我做主，高低床榻榻米式靓丽卧室装扮，现代油画壁画帆布画卧室餐厅仟象映画，现代中式卧室装修图欣赏，温馨浪漫，而且很时尚的卧室设计，欧式卧室飘窗装修效果图。
-                    </p>
+                  <p>{{ item.title }}</p>
+                  <p>{{ item.zhaiyao }}</p>        
             </div>
-          </li>
-            <li>
-            <a href="#">
-              <img src="http://vue.studyit.io/upload/201504/18/thumb_201504181230434303.jpg" alt="">
-            </a>
+              </router-link>
           </li>
        </ul>
      
@@ -42,7 +29,55 @@
   </div>
 </template>
 <script>
+  export default{
+    data(){
+      return{
+          title:[],
+          share:[],
+          ulWidth:'',
+      }
+    },
+    created(){
+    this.getimgcategory();
+    this.getimages(-1);
+    },
+    methods:{
+      getimgcategory(){
+        this.$http
+        .get('getimgcategory')
+        .then((res)=>{
+          if(res.status === 200 && res.data.status === 0 ){
+
+            this.title = res.data.message
+            this.ulWidth = 'width:'+70 * this.title.length+'px';
   
+          } else{
+            console.log('服务器内部出错')
+          }
+         
+        })
+        .catch((err)=>{
+          console.error(err)
+        })
+      },
+      getimages(id){
+        let url ="getimages/"+id
+        this.$http
+        .get(url)
+        .then((res)=>{
+          if(res.status=== 200 && res.data.status ===0){
+              this.share = res.data.message
+          }else{
+            console.log('服务器内部出错');
+          }
+         
+        })
+        .catch((err)=>{
+          console.error(err)
+        })
+      }
+    }
+  }
 
 </script>
 
@@ -54,16 +89,17 @@
   }
 
   .title{
+    
      overflow-y: hidden;
     overflow-x: auto;
     
     }
 
-    ::-webkit-scrollbar{
+::-webkit-scrollbar{
   display: none;
 }
   .title ul{
-     width: 1000px;
+
       overflow-x: auto;
       overflow-y: hidden;
       height: 62px;
@@ -84,6 +120,11 @@
     position: relative;
      height: 300px;
      margin-bottom: 5px;
+   }
+   .content li a {
+     width: 100%;
+     height: 100%;
+     display: block;
    }
    .content  .footer {
      position:absolute;

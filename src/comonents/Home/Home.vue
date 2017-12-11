@@ -36,7 +36,7 @@ export default{
       this.$http
       .get('getmenus')
       .then((res)=>{
-        console.log(res)
+
         if(res.status===200&&res.data.status===0){
           this.menus=res.data.message
         }

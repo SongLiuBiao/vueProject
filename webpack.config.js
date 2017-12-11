@@ -10,8 +10,10 @@ module.exports = {
 
     module: {
 
-        rules: [
-
+        rules: [{
+                test: /vue-preview.src.*?js$/,
+                loader: 'babel'
+            },
 
             {
                 test: /\.css$/,

@@ -7,9 +7,7 @@
        </div>
          <ul>
                <li v-for="(item,index) in images":key="index">
-                   <a href="#">
-                       <img :src="item.src"alt="">
-                    </a>
+                    <img @click="$preview.open(index, images)" class="preview-img" :src="item.src"> 
                </li>
          </ul>
          <p v-html="menus.content">
@@ -23,7 +21,11 @@
 
 
 <script>
+import Vue from 'vue'
 import comment from '../../Conment/comment.vue'
+import VuePreview from 'vue-preview'
+Vue.use(VuePreview)
+
     export default{
         data(){
             return{
@@ -65,6 +67,10 @@ import comment from '../../Conment/comment.vue'
                 .then((res)=>{
                     if(res.status === 200 && res.data.status ===0){
                         this.images = res.data.message
+                    this.images.forEach(item=>{
+                        item.w =600;
+                        item.h =400;
+                    })
                         console.log(res);
                     }else{
                         console.log('服务器内部出错');
@@ -99,7 +105,7 @@ ul{
     margin: 0px;
     overflow: hidden;
 }
-ul li a img {
+ul li  img {
     width: 100px;
     height: 100px;   
 }

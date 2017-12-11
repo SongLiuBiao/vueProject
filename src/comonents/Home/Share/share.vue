@@ -14,8 +14,10 @@
        <ul>
           <li v-for="(item,index) in share" :key="index">
             <!-- <router-link :to="{name:'shareDetail', params:{id:item.id}}"> -->
-              <router-link v-bind="{to:'/share/'+item.id}"></router-link>
-                 <img :src="item.img_url" alt="">
+              <router-link v-bind="{to:'/share/'+item.id}">
+                <img :src="item.img_url" alt="">
+              </router-link>
+                 
           
             <div class="footer">
                   <p>{{ item.title }}</p>

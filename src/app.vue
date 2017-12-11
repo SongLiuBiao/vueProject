@@ -1,7 +1,7 @@
 <template>
    <div >
 	<header class="mui-bar mui-bar-nav">
-		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+		<a v-if="isShow"  @click="goback" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
 		<h1 class="mui-title">我的第一个大项目</h1>
 	</header>
 	<nav class="mui-bar mui-bar-tab">
@@ -27,6 +27,37 @@
 </template>
 
 <script>
+export default{
+	data(){
+		return{
+			isShow:false
+		}
+	},
+	methods:{
+		goback(){
+			this.$router.back()
+		}
+	},
+	created(){
+		let arr =['/home','/member','/shopcar','/search']
+		if(arr.indexOf(this.$route.path)== -1){
+			this.isShow =true
+		}else{
+			this.isShow = false
+		}
+	},
+	watch:{
+		'$route':function(newValue){
+	
+			let arr =['/home','/member','/shopcar','/search']
+			if(arr.indexOf(newValue.path)== -1){
+				this.isShow =true;
+			}else{
+				this.isShow =false;
+			}
+		}
+	}
+}
   
 
 
